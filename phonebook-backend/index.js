@@ -61,6 +61,24 @@ app.get('/api/persons/:id', (request, response) => {
     }
 })
 
+app.put('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+    let foundperson = persons.find(person => person.id === id)
+    if (foundperson) {
+        console.log("requbody", request.body.number)
+        foundperson = {...foundperson, number: request.body.number}
+        persons = persons.filter(person => person.id !== id)
+        // persons.concat(foundperson)
+        console.log(persons)
+        persons = persons.concat(request.body)
+        console.log(persons)
+        response.json(foundperson)
+    }
+    else {
+        response.status(404).end()
+    }
+})
+
 
 app.get('/info', (request, response) => {
     console.log(persons.length)
